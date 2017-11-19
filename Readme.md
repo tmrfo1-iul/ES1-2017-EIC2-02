@@ -1,9 +1,19 @@
-Identificação da turma (ex: EIC1)
+#Turma EIC2
 
-Identificação do grupo (ex: Grupo 2)
+**Grupo 02**
 
-Identificação do número, nome e papel de cada membro do grupo (ex: 12345, José Silva, Scrum Master)
+#Membros: 
 
-Identificação da variante do projeto desenvolvida (ex: AntiSpamConfigurationForProfessionalMailbox)
+**Nome				Numero		Role**
+Hugo Alexandre  	*72821* 	SCRUM Master 
+Andr� Freire		*33607* 	Developer 
+Daniel Caldeira		*73251* 	Developer 
+Tiago Feliciano		*72754* 	Quality Manager
 
-Link para um vídeo no youtube com a demonstração da aplicação final desenvolvida (ex: http://...)
+
+#Project Variant: AntiSpamConfigurationForLeisureMailbox
+
+
+Link: (Projeto final, Youtube)
+
+
