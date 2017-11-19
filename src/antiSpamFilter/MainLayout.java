@@ -22,13 +22,13 @@ import javax.swing.JFileChooser;
 public class MainLayout {
 
 	private JFrame frame;
-	private JTextField txtFicheiro1;
-	private JTextField txtFicheiro2;
-	private JTextField txtFicheiro3;
+	private JTextField txtRules;
+	private JTextField txtHam;
+	private JTextField txtLog;
 	private JPanel panelFileChoose;
-	private JButton btnFicheiro1;
-	private JButton btnFicheiro2;
-	private JButton btnFicheiro3;
+	private JButton btnRules;
+	private JButton btnHam;
+	private JButton btnLog;
 	private JButton btnSaveConfiguration;
 
 	/**
@@ -88,51 +88,54 @@ public class MainLayout {
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
-		txtFicheiro1 = new JTextField();
-		txtFicheiro2 = new JTextField();
-		txtFicheiro3 = new JTextField();
-		txtFicheiro1.setColumns(10);
-		txtFicheiro2.setColumns(10);
-		txtFicheiro3.setColumns(10);
-		panel.add(txtFicheiro1, "2, 2, fill, default");
-		panel.add(txtFicheiro2, "2, 4, fill, default");
-		panel.add(txtFicheiro3, "2, 6, fill, default");
-		btnFicheiro1 = new JButton("");
-		btnFicheiro2 = new JButton("");
-		btnFicheiro3 = new JButton("");
-		panel.add(btnFicheiro1, "4, 2");
-		panel.add(btnFicheiro2, "4, 4");
-		panel.add(btnFicheiro3, "4, 6, left, default");
+		txtRules = new JTextField();
+		txtHam = new JTextField();
+		txtLog = new JTextField();
+		txtRules.setEditable(false);
+		txtHam.setEditable(false);
+		txtLog.setEditable(false);
+		txtRules.setColumns(10);
+		txtHam.setColumns(10);
+		txtLog.setColumns(10);
+		panel.add(txtRules, "2, 2, fill, default");
+		panel.add(txtHam, "2, 4, fill, default");
+		panel.add(txtLog, "2, 6, fill, default");
+		btnRules = new JButton("");
+		btnHam = new JButton("");
+		btnLog = new JButton("");
+		panel.add(btnRules, "4, 2");
+		panel.add(btnHam, "4, 4");
+		panel.add(btnLog, "4, 6, left, default");
 		btnSaveConfiguration = new JButton("ConfigurarCaminho");
 		panel.add(btnSaveConfiguration, "2, 8, fill, default");
 		btnSaveConfiguration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnFicheiro1.addActionListener(new ActionListener() {
+		btnRules.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int result = fileChooser.showOpenDialog(btnSaveConfiguration);
 				if (result == JFileChooser.APPROVE_OPTION) {
 				    File selectedFile = fileChooser.getSelectedFile();
-				    txtFicheiro1.setText(selectedFile.getAbsolutePath());
+				    txtRules.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
-		btnFicheiro2.addActionListener(new ActionListener() {
+		btnHam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int result = fileChooser.showOpenDialog(btnSaveConfiguration);
 				if (result == JFileChooser.APPROVE_OPTION) {
 				    File selectedFile = fileChooser.getSelectedFile();
-				    txtFicheiro2.setText(selectedFile.getAbsolutePath());
+				    txtHam.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
-		btnFicheiro3.addActionListener(new ActionListener() {
+		btnLog.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int result = fileChooser.showOpenDialog(btnSaveConfiguration);
 				if (result == JFileChooser.APPROVE_OPTION) {
 				    File selectedFile = fileChooser.getSelectedFile();
-				    txtFicheiro3.setText(selectedFile.getAbsolutePath());
+				    txtLog.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
