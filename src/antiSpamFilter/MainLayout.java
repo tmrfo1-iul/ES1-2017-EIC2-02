@@ -19,6 +19,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -69,12 +71,15 @@ public class MainLayout {
 	private JPanel createPathPanel(){
 		JPanel pathPanel = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel();
+		panel.setBorder(null);
 		pathPanel.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("150dlu:grow"),
 				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
+				ColumnSpec.decode("30px"),
 				FormSpecs.RELATED_GAP_COLSPEC,
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -83,35 +88,44 @@ public class MainLayout {
 				FormSpecs.DEFAULT_COLSPEC,
 				FormSpecs.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),},
-				new RowSpec[] {
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC,}));
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("30px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("30px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("30px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
 		JTextField txtRules = new JTextField();
 		JTextField txtHam = new JTextField();
-		JTextField txtLog = new JTextField();
+		JTextField txtSpam = new JTextField();
 		txtRules.setEditable(false);
 		txtHam.setEditable(false);
-		txtLog.setEditable(false);
+		txtSpam.setEditable(false);
 		txtRules.setColumns(10);
 		txtHam.setColumns(10);
-		txtLog.setColumns(10);
-		panel.add(txtRules, "2, 2, fill, default");
-		panel.add(txtHam, "2, 4, fill, default");
-		panel.add(txtLog, "2, 6, fill, default");
+		txtSpam.setColumns(10);
+		JLabel lblRules = new JLabel("Rules");
+		panel.add(lblRules, "2, 2, right, default");
+		panel.add(txtRules, "4, 2, fill, default");
+		JLabel lblHam = new JLabel("Ham");
+		panel.add(lblHam, "2, 4, right, default");
+		panel.add(txtHam, "4, 4, fill, default");
+		JLabel lblSpam = new JLabel("Spam");
+		panel.add(lblSpam, "2, 6, right, default");
+		panel.add(txtSpam, "4, 6, fill, default");
 		JButton btnRules = new JButton("");
+		btnRules.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
 		JButton btnHam = new JButton("");
-		JButton btnLog = new JButton("");
-		panel.add(btnRules, "4, 2");
-		panel.add(btnHam, "4, 4");
-		panel.add(btnLog, "4, 6, left, default");
+		btnHam.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
+		JButton btnSpam = new JButton("");
+		btnSpam.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
+		panel.add(btnRules, "6, 2, default, fill");
+		panel.add(btnHam, "6, 4, default, fill");
+		panel.add(btnSpam, "6, 6, left, fill");
 		JButton btnSaveConfiguration = new JButton("ConfigurarCaminho");
-		panel.add(btnSaveConfiguration, "2, 8, fill, default");
+		panel.add(btnSaveConfiguration, "4, 8, fill, default");
 		btnSaveConfiguration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				showMainPanel();
@@ -140,12 +154,12 @@ public class MainLayout {
 			}
 		});
 		
-		btnLog.addActionListener(new ActionListener() {
+		btnSpam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int result = fileChooser.showOpenDialog(btnSaveConfiguration);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
-					txtLog.setText(selectedFile.getAbsolutePath());
+					txtSpam.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
