@@ -1,0 +1,14 @@
+Sprint Retrospective of Sprint 1
+
+
+Working:
+
+  -A GUI ficou implementada com sucesso alcançando, assim, todos os objetivos do Sprint. 
+  -A equipa demonstrou uma boa coordenaçao e uma organizaçao muito boa, tendo cumprido todas as tarefas dentro dos prazoes estabelecidos no Sprint.
+  -A equipa deve, se possivel, manter o ritmo que obteve no sprint de modo a alcançar sempre os objetivos propostos.
+
+
+Not Working:
+
+  -Tudo o que foi acordado no sprint foi realizado.
+
