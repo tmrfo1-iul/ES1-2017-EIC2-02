@@ -2,8 +2,13 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:31</date>
   <millis>1511731951888</millis>
+=======
+  <date>2017-11-27T22:13:40</date>
+  <millis>1511820820365</millis>
+>>>>>>> Stashed changes
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,8 +18,13 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:31</date>
   <millis>1511731951952</millis>
+=======
+  <date>2017-11-27T22:13:40</date>
+  <millis>1511820820391</millis>
+>>>>>>> Stashed changes
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -24,8 +34,13 @@
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:31</date>
   <millis>1511731951965</millis>
+=======
+  <date>2017-11-27T22:13:40</date>
+  <millis>1511820820405</millis>
+>>>>>>> Stashed changes
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -35,8 +50,13 @@
   <message> Running algorithm: NSGAII, problem: AntiSpamFilterProblem, run: 0, funFile: experimentBaseDirectory/AntiSpamStudy/data/NSGAII/AntiSpamFilterProblem/FUN0.tsv</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:33</date>
   <millis>1511731953282</millis>
+=======
+  <date>2017-11-27T22:13:41</date>
+  <millis>1511820821826</millis>
+>>>>>>> Stashed changes
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -46,8 +66,13 @@
   <message> Running algorithm: NSGAII, problem: AntiSpamFilterProblem, run: 1, funFile: experimentBaseDirectory/AntiSpamStudy/data/NSGAII/AntiSpamFilterProblem/FUN1.tsv</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:33</date>
   <millis>1511731953828</millis>
+=======
+  <date>2017-11-27T22:13:42</date>
+  <millis>1511820822780</millis>
+>>>>>>> Stashed changes
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -57,8 +82,13 @@
   <message> Running algorithm: NSGAII, problem: AntiSpamFilterProblem, run: 2, funFile: experimentBaseDirectory/AntiSpamStudy/data/NSGAII/AntiSpamFilterProblem/FUN2.tsv</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:34</date>
   <millis>1511731954234</millis>
+=======
+  <date>2017-11-27T22:13:43</date>
+  <millis>1511820823519</millis>
+>>>>>>> Stashed changes
   <sequence>5</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -68,8 +98,13 @@
   <message> Running algorithm: NSGAII, problem: AntiSpamFilterProblem, run: 3, funFile: experimentBaseDirectory/AntiSpamStudy/data/NSGAII/AntiSpamFilterProblem/FUN3.tsv</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:34</date>
   <millis>1511731954626</millis>
+=======
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824088</millis>
+>>>>>>> Stashed changes
   <sequence>6</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -79,8 +114,13 @@
   <message> Running algorithm: NSGAII, problem: AntiSpamFilterProblem, run: 4, funFile: experimentBaseDirectory/AntiSpamStudy/data/NSGAII/AntiSpamFilterProblem/FUN4.tsv</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955141</millis>
+=======
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824948</millis>
+>>>>>>> Stashed changes
   <sequence>7</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -90,8 +130,13 @@
   <message>Computing indicator: HV</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955142</millis>
+=======
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824948</millis>
+>>>>>>> Stashed changes
   <sequence>8</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -101,8 +146,13 @@
   <message>RF: experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.rf</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955145</millis>
+=======
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824952</millis>
+>>>>>>> Stashed changes
   <sequence>9</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -112,8 +162,13 @@
   <message>File experimentBaseDirectory/AntiSpamStudy/data/NSGAII/AntiSpamFilterProblem/HV exist.</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955146</millis>
+=======
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824953</millis>
+>>>>>>> Stashed changes
   <sequence>10</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -123,8 +178,13 @@
   <message>File experimentBaseDirectory/AntiSpamStudy/data/NSGAII/AntiSpamFilterProblem/HV is a file. Deleting file.</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955148</millis>
+=======
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824954</millis>
+>>>>>>> Stashed changes
   <sequence>11</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -134,58 +194,99 @@
   <message>File succesfully deleted.</message>
 </record>
 <record>
+<<<<<<< Updated upstream
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955157</millis>
+=======
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824958</millis>
+>>>>>>> Stashed changes
   <sequence>12</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
   <thread>1</thread>
+<<<<<<< Updated upstream
   <message>HV: 0.22808852600280705</message>
 </record>
 <record>
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955167</millis>
+=======
+  <message>HV: 0.7455197132616487</message>
+</record>
+<record>
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824965</millis>
+>>>>>>> Stashed changes
   <sequence>13</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
   <thread>1</thread>
+<<<<<<< Updated upstream
   <message>HV: 0.5511701593846081</message>
 </record>
 <record>
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955175</millis>
+=======
+  <message>HV: 0.6666666666666667</message>
+</record>
+<record>
+  <date>2017-11-27T22:13:44</date>
+  <millis>1511820824971</millis>
+>>>>>>> Stashed changes
   <sequence>14</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
   <thread>1</thread>
+<<<<<<< Updated upstream
   <message>HV: 0.0</message>
 </record>
 <record>
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955187</millis>
+=======
+  <message>HV: 0.45878136200716846</message>
+</record>
+<record>
+  <date>2017-11-27T22:13:45</date>
+  <millis>1511820825077</millis>
+>>>>>>> Stashed changes
   <sequence>15</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
   <thread>1</thread>
+<<<<<<< Updated upstream
   <message>HV: 0.0</message>
 </record>
 <record>
   <date>2017-11-26T21:32:35</date>
   <millis>1511731955198</millis>
+=======
+  <message>HV: 0.5519713261648747</message>
+</record>
+<record>
+  <date>2017-11-27T22:13:45</date>
+  <millis>1511820825093</millis>
+>>>>>>> Stashed changes
   <sequence>16</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
   <thread>1</thread>
+<<<<<<< Updated upstream
   <message>HV: 0.8709322695978825</message>
+=======
+  <message>HV: 0.48028673835125446</message>
+>>>>>>> Stashed changes
 </record>
 </log>

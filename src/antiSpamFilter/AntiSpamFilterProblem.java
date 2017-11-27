@@ -1,54 +1,120 @@
 package antiSpamFilter;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Scanner;
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 
 public class AntiSpamFilterProblem extends AbstractDoubleProblem {
+	private static final long serialVersionUID = 1L;
 
-	  public AntiSpamFilterProblem() {
-	    // 10 variables (anti-spam filter rules) by default 
-	    this(10);
-	  }
+	private static final int NUMBER_OF_OBJECTIVES = 2;
+	private static final double LOWER_BOUND = -5.0;
+	private static final double UPPER_BOUND = 5.0;
+	private static final double SPAM_THRESHOLD = 5.0;
 
-	  public AntiSpamFilterProblem(Integer numberOfVariables) {
-	    setNumberOfVariables(numberOfVariables);
-	    setNumberOfObjectives(2);
-	    setName("AntiSpamFilterProblem");
+	private final HashMap<String, Integer> rules;
+	private final List<List<String>> spamLog;
+	private final List<List<String>> hamLog;
 
-	    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-	    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+	public AntiSpamFilterProblem(String rulesPath, String spamPath, String hamPath) throws IOException {
+		rules = readRules(rulesPath);
+		spamLog = readLog(spamPath, "spam");
+		hamLog = readLog(hamPath, "ham");
 
-	    for (int i = 0; i < getNumberOfVariables(); i++) {
-	      lowerLimit.add(-5.0);
-	      upperLimit.add(5.0);
-	    }
+		setNumberOfVariables(rules.size());
+		setNumberOfObjectives(NUMBER_OF_OBJECTIVES);
+		setName("AntiSpamFilterProblem");
 
-	    setLowerLimit(lowerLimit);
-	    setUpperLimit(upperLimit);
-	  }
+		List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables());
+		List<Double> upperLimit = new ArrayList<>(getNumberOfVariables());
+		for (int i = 0; i < getNumberOfVariables(); i++) {
+			lowerLimit.add(LOWER_BOUND);
+			upperLimit.add(UPPER_BOUND);
+		}
 
-	  public void evaluate(DoubleSolution solution){
-	    double aux, xi, xj;
-	    double[] fx = new double[getNumberOfObjectives()];
-	    double[] x = new double[getNumberOfVariables()];
-	    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
-	      x[i] = solution.getVariableValue(i) ;
-	    }
-
-	    fx[0] = 0.0;
-	    for (int var = 0; var < solution.getNumberOfVariables() - 1; var++) {
-		  fx[0] += Math.abs(x[0]); // Example for testing
-	    }
-	    
-	    fx[1] = 0.0;
-	    for (int var = 0; var < solution.getNumberOfVariables(); var++) {
-	    	fx[1] += Math.abs(x[1]); // Example for testing
-	    }
-
-	    solution.setObjective(0, fx[0]);
-	    solution.setObjective(1, fx[1]);
-	  }
+		setLowerLimit(lowerLimit);
+		setUpperLimit(upperLimit);
 	}
+
+	private HashMap<String, Integer> readRules(String filePath) throws IOException {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		Path path = Paths.get(filePath);
+		try {
+			Scanner scanner = new Scanner(path);
+			int it = 0;
+			while (scanner.hasNextLine()) {
+				map.put(scanner.nextLine(), it);
+				it++;
+			}
+			scanner.close();
+			return map;
+		} catch (IOException e) {
+			throw new IOException("Invalid path to rules file.");
+		}
+	}
+
+	private List<List<String>> readLog(String filePath, String fileType) throws IOException{
+		List<List<String>> list = new ArrayList<>();
+		Path path = Paths.get(filePath);
+		try {
+			Scanner scanner = new Scanner(path);
+			while (scanner.hasNextLine()) {
+				String[] line = scanner.nextLine().split("\t");
+				List<String> emailRules = new ArrayList<String>();
+				// Starts at one because the file format starts each line with the email ID (not a rule)
+				for(int i = 1; i < line.length; i++){
+					emailRules.add(line[i]);
+				}
+				list.add(emailRules);
+			}
+			scanner.close();
+			return list;
+		} catch (IOException e) {
+			throw new IOException("Invalid path to " + fileType + " file.");
+		}
+	}
+
+	public void evaluate(DoubleSolution solution) {
+		int falsePositives = 0;
+		int falseNegatives = 0;
+
+		// Non-SPAM messages classified as SPAM (False Positives)
+		for (int hamMsgIterator = 0; hamMsgIterator < hamLog.size(); hamMsgIterator++) {
+			int total = 0;
+			List<String> ruleNames = hamLog.get(hamMsgIterator);
+			for (int j = 0; j < ruleNames.size(); j++) {
+				Integer mappedIterator = rules.get(ruleNames.get(j));
+				if(mappedIterator != null){
+					total += solution.getVariableValue(mappedIterator);
+				}
+			}
+			if (total > SPAM_THRESHOLD) {
+				falsePositives++;
+			}
+		}
+		
+		// SPAM messages classified as non-SPAM (False Negatives)
+		for (int spamMsgIterator = 0; spamMsgIterator < spamLog.size(); spamMsgIterator++) {
+			int total = 0;
+			List<String> ruleNames = spamLog.get(spamMsgIterator);
+			for (int j = 0; j < ruleNames.size(); j++) {
+				Integer mappedIterator = rules.get(ruleNames.get(j));
+				if(mappedIterator != null){
+					total += solution.getVariableValue(mappedIterator);
+				}
+			}
+			if (total <= SPAM_THRESHOLD) {
+				falseNegatives++;
+			}
+		}
+
+		solution.setObjective(0, falsePositives);
+		solution.setObjective(1, falseNegatives);
+	}
+}
