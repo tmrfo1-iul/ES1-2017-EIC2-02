@@ -1,38 +1,40 @@
 package antiSpamFilter;
 
 import java.awt.EventQueue;
-import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EtchedBorder;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.awt.event.ActionEvent;
-import javax.swing.JFileChooser;
 
 public class MainLayout {
+
 	private JFrame frame;
-	private CardLayout cardLayout;
-	private final String MAIN_PANEL = "Main Panel";
-	private final String PATH_PANEL = "Path Panel";
-	
+	private JTextField txtRules;
+	private JTextField txtHam;
+	private JTextField txtSpam;
+	private JTable table_configuracaoManual;
+	private JTextField CM_tx_FalsePositive;
+	private JTextField CM_tx_FalseNegative;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTable table_configuracaoAutomatica;
+	private JTextField A_tx_FalsePositive;
+	private JTextField A_tx_FalseNegative;
+
 	/**
 	 * Launch the application.
 	 */
@@ -49,95 +51,67 @@ public class MainLayout {
 		});
 	}
 
-	
 	/**
 	 * Create the application.
 	 */
 	public MainLayout() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 400);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cardLayout = new CardLayout();
-		frame.getContentPane().setLayout(cardLayout);
-		frame.getContentPane().add(createPathPanel(), PATH_PANEL);
-		frame.getContentPane().add(createMainPanel(), MAIN_PANEL);
-		showPathPanel();
+		initialize();
 	}
 
-	
 	/**
-	 * Initialize the contents of the panel to specify paths.
+	 * Initialize the contents of the frame.
 	 */
-	private JPanel createPathPanel(){
-		JPanel pathPanel = new JPanel(new BorderLayout());
-		JPanel panel = new JPanel();
-		panel.setBorder(null);
-		pathPanel.add(panel, BorderLayout.NORTH);
-		panel.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("150dlu:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("30px"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("30px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("30px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("30px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		JTextField txtRules = new JTextField();
-		JTextField txtHam = new JTextField();
-		JTextField txtSpam = new JTextField();
-		txtRules.setEditable(false);
-		txtHam.setEditable(false);
-		txtSpam.setEditable(false);
-		txtRules.setColumns(10);
-		txtHam.setColumns(10);
-		txtSpam.setColumns(10);
+	private void initialize() {
+		frame = new JFrame("AntiSpamConfigurationForLeisureMailbox");
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 450, 667);
+
+		frame.addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null, "Do you wish to save the File Paths?",
+						"Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					// TODO fazer com que o gajo grave os Path
+				}
+				System.exit(0);
+			}
+
+		});
+
 		JLabel lblRules = new JLabel("Rules");
-		panel.add(lblRules, "2, 2, right, default");
-		panel.add(txtRules, "4, 2, fill, default");
+
 		JLabel lblHam = new JLabel("Ham");
-		panel.add(lblHam, "2, 4, right, default");
-		panel.add(txtHam, "4, 4, fill, default");
+
 		JLabel lblSpam = new JLabel("Spam");
-		panel.add(lblSpam, "2, 6, right, default");
-		panel.add(txtSpam, "4, 6, fill, default");
+
+		txtRules = new JTextField();
+		txtRules.setEditable(false);
+		txtRules.setColumns(10);
+
+		txtHam = new JTextField();
+		txtHam.setEditable(false);
+		txtHam.setColumns(10);
+
+		txtSpam = new JTextField();
+		txtSpam.setEditable(false);
+		txtSpam.setColumns(10);
+
 		JButton btnRules = new JButton("");
 		btnRules.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
+
 		JButton btnHam = new JButton("");
 		btnHam.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
+
 		JButton btnSpam = new JButton("");
 		btnSpam.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
-		panel.add(btnRules, "6, 2, default, fill");
-		panel.add(btnHam, "6, 4, default, fill");
-		panel.add(btnSpam, "6, 6, left, fill");
-		JButton btnSaveConfiguration = new JButton("ConfigurarCaminho");
-		panel.add(btnSaveConfiguration, "4, 8, fill, default");
-		btnSaveConfiguration.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				showMainPanel();
-			}
-		});
-		
 
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		btnRules.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooser.showOpenDialog(btnSaveConfiguration);
+				int result = fileChooser.showOpenDialog(btnRules);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 					txtRules.setText(selectedFile.getAbsolutePath());
@@ -146,171 +120,374 @@ public class MainLayout {
 		});
 		btnHam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooser.showOpenDialog(btnSaveConfiguration);
+				int result = fileChooser.showOpenDialog(btnHam);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 					txtHam.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
-		
+
 		btnSpam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooser.showOpenDialog(btnSaveConfiguration);
+				int result = fileChooser.showOpenDialog(btnSpam);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 					txtSpam.setText(selectedFile.getAbsolutePath());
 				}
 			}
 		});
-		
-		JPanel panelFileChoose = new JPanel();
-		pathPanel.add(panelFileChoose, BorderLayout.WEST);
-		panelFileChoose.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("140dlu"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("140dlu:grow"),},
-				new RowSpec[] {
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						FormSpecs.DEFAULT_ROWSPEC,
-						FormSpecs.RELATED_GAP_ROWSPEC,
-						RowSpec.decode("20dlu:grow"),}));
-		
-		return pathPanel;
-	}
-	
-	
-	/**
-	 * Displays the panel to specify paths.
-	 */
-	private void showPathPanel() {
-		cardLayout.show(frame.getContentPane(), PATH_PANEL);
-	}
-	
 
-	/**
-	 * Initialize the contents of the panel to visualize filter data.
-	 */
-	private JPanel createMainPanel(){
-		JPanel mainPanel = new JPanel(null);
-		JButton btnCalcular = new JButton("Calcular FP/FN");
-		btnCalcular.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO
-			}
-		});
-		btnCalcular.setBounds(18, 320, 120, 25);
-		mainPanel.add(btnCalcular);
-		
-		JButton btnGenerate = new JButton("Gerar Pesos");
-		btnGenerate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO
-			}
-		});
-		btnGenerate.setBounds(145, 320, 150, 25);
-		mainPanel.add(btnGenerate);
-		
-		JButton btnChangePath = new JButton("Alterar path");
-		btnChangePath.setBounds(300, 320, 120, 25);
-		btnChangePath.addActionListener(new ActionListener() {
+		JScrollPane scrollPane = new JScrollPane();
+
+		JButton btnAvaliar = new JButton("Evaluate");
+		btnAvaliar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showPathPanel();
+				// TODO avaliar pesos da avaliacao manual
 			}
 		});
-		mainPanel.add(btnChangePath);
-		
-		JScrollPane scrollPaneRules = new JScrollPane();
-		scrollPaneRules.setViewportBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		scrollPaneRules.setBounds(17, 20, 400, 200);
-		mainPanel.add(scrollPaneRules);
-		
-		JTable tableRules = new JTable();
-		tableRules.setModel(getRulesAndWeightsTable(false));
-		scrollPaneRules.setViewportView(tableRules);
-		
-		JLabel lblResults = new JLabel("Resultados:");
-		lblResults.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		lblResults.setBounds(185, 240, 80, 14);
-		mainPanel.add(lblResults);
-		
-		JScrollPane scrollPaneResults = new JScrollPane();
-		scrollPaneResults.setViewportBorder(null);
-		scrollPaneResults.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPaneResults.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneResults.setBounds(17, 260, 400, 40);
-		mainPanel.add(scrollPaneResults);
-		
-		JTable tableResults = new JTable();
-		tableResults.setShowHorizontalLines(false);
-		tableResults.setFillsViewportHeight(true);
-		tableResults.setRowSelectionAllowed(false);
-		tableResults.setModel(getResultsTable());
-		scrollPaneResults.setViewportView(tableResults);
-		return mainPanel;
-	}
 
-
-	/**
-	 * Displays the panel to visualize filter data.
-	 */
-	private void showMainPanel(){
-		cardLayout.show(frame.getContentPane(), MAIN_PANEL);
-	}
-
-	
-	private TableModel getRulesAndWeightsTable(boolean editable) {
-		// TODO
-		DefaultTableModel model =  new DefaultTableModel(
-			new Object[][] {
-				{"c1", "p1"},
-				{"c2", "p2"},
-				{"c3", "p3"},
-				{"c4", "p4"},
-				{"c5", "p5"},
-				{"c6", "p6"},
-				{"c7", "p7"},
-				{"c8", "p8"},
-				{"c9", "p9"},
-				{"c10", "p10"},
-				{"c11", "p11"},
-				{"c12", "p12"},
-				{"c13", "p13"},
-				{"c14", "p14"},
-				{"c15", "p15"},
-				{"c16", "p16"}
-			},
-			new String[] {
-				"Regras", "Pesos"
-			})
-		{
-			private static final long serialVersionUID = 1L;
-			public boolean isCellEditable(int row, int column) {
-				return editable;
-			}	
-		};
-		
-		return model;
-	}
-	
-	
-	private TableModel getResultsTable() {
-		// TODO
-		DefaultTableModel model = new DefaultTableModel(
-			new Object[][] {
-				{"0", "0"},
-			},
-			new String[] {
-					"Falsos Positivos", "Falsos Negativos"
-			})
-		{
-			private static final long serialVersionUID = 1L;
-			public boolean isCellEditable(int row, int column) {
-				return false;
+		JButton btnGravar = new JButton("Save");
+		btnGravar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO guardar os pesos manuais para um ficheiro
 			}
-		};
-		return model;	
+		});
+
+		CM_tx_FalsePositive = new JTextField();
+		CM_tx_FalsePositive.setEditable(false);
+		CM_tx_FalsePositive.setColumns(10);
+
+		CM_tx_FalseNegative = new JTextField();
+		CM_tx_FalseNegative.setEditable(false);
+		CM_tx_FalseNegative.setColumns(10);
+
+		JLabel CM_lblFalse_Positive = new JLabel("False Positive:");
+
+		JLabel CM_lblFalse_Negative = new JLabel("False Negative:");
+
+		JLabel label = new JLabel("False Negative:");
+
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+
+		JLabel label_1 = new JLabel("False Positive:");
+
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+
+		JScrollPane scrollPane_2 = new JScrollPane();
+
+		JButton btnGerarConfigurao = new JButton("Generate configuration");
+		btnGerarConfigurao.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO gerar configuracao optima
+			}
+		});
+
+		JButton btnGravar_1 = new JButton("Save");
+		btnGravar_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO guardar os pesos optimos para um ficheiro
+			}
+		});
+
+		JLabel A_lblFalsePositive = new JLabel("False Positive:");
+
+		JLabel A_lblFalseNegative = new JLabel("False Negative:");
+
+		A_tx_FalsePositive = new JTextField();
+		A_tx_FalsePositive.setEditable(false);
+		A_tx_FalsePositive.setColumns(10);
+
+		A_tx_FalseNegative = new JTextField();
+		A_tx_FalseNegative.setEditable(false);
+		A_tx_FalseNegative.setColumns(10);
+
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblHam, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(txtHam, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnHam, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblRules)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(txtRules, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE)
+									.addGap(6)
+									.addComponent(btnRules, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblSpam, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(txtSpam, GroupLayout.PREFERRED_SIZE, 319, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnSpam, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+							.addGap(26)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(label, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+									.addGap(12)
+									.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(39)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnGravar, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnAvaliar, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(10)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(A_lblFalseNegative)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(A_tx_FalseNegative, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(A_lblFalsePositive)
+											.addGap(10)
+											.addComponent(A_tx_FalsePositive, 0, 0, Short.MAX_VALUE))))
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addComponent(btnGerarConfigurao)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+											.addComponent(CM_lblFalse_Negative)
+											.addComponent(CM_lblFalse_Positive))
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+											.addComponent(CM_tx_FalseNegative, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+											.addComponent(CM_tx_FalsePositive, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
+										.addGap(37)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(39)
+									.addComponent(btnGravar_1, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addContainerGap(27, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(20)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblRules)
+						.addComponent(txtRules, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnRules, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(txtHam, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblHam)
+						.addComponent(btnHam, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSpam)
+						.addComponent(txtSpam, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSpam, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(76)
+							.addComponent(btnAvaliar)
+							.addGap(18)
+							.addComponent(btnGravar)
+							.addGap(26)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(CM_lblFalse_Positive)
+								.addComponent(CM_tx_FalsePositive, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(CM_tx_FalseNegative, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(CM_lblFalse_Negative))
+							.addGap(86)
+							.addComponent(btnGerarConfigurao)
+							.addGap(18)
+							.addComponent(btnGravar_1)
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(A_lblFalsePositive)
+								.addComponent(A_tx_FalsePositive, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(A_lblFalseNegative)
+								.addComponent(A_tx_FalseNegative, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(344)
+							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(392)
+							.addGap(18)
+							.addGap(26)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(3)
+									.addComponent(label_1))
+								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(11)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(label)
+								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+					.addGap(37))
+		);
+
+		table_configuracaoAutomatica = new JTable();
+		table_configuracaoAutomatica.setEnabled(false);
+		table_configuracaoAutomatica.setRowSelectionAllowed(false);
+		table_configuracaoAutomatica.setModel(new DefaultTableModel(
+				// TODO fill this table with the info from the files
+				new Object[][] { { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, // 45
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, // 45
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, // 45
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, },
+				new String[] { "Rules", "Weights" }));
+		scrollPane_2.setViewportView(table_configuracaoAutomatica);
+
+		table_configuracaoManual = new JTable();
+		table_configuracaoManual.setRowSelectionAllowed(false);
+		table_configuracaoManual
+				.setModel(new DefaultTableModel(new Object[][] { { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null }, // 45
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, // 45
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, // 45
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, { null, null }, { null, null }, { null, null }, { null, null },
+						{ null, null }, { null, null }, }, new String[] { "Rules", "Weights" }));
+		scrollPane.setViewportView(table_configuracaoManual);
+		frame.getContentPane().setLayout(groupLayout);
 	}
 }
