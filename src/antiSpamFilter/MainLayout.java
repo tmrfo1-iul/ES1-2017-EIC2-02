@@ -122,13 +122,13 @@ public class MainLayout {
 		JButton btnSpam = new JButton("");
 		btnSpam.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
 		JFileChooser fileChooserRules = new JFileChooser();
-		JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooserOther = new JFileChooser();
 		FileNameExtensionFilter filterRules = new FileNameExtensionFilter("CF Files", "cf", "cf");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("LOG Files", "log", "log");
 		fileChooserRules.setFileFilter(filterRules);
-		fileChooser.setFileFilter(filter);
+		fileChooserOther.setFileFilter(filter);
 		fileChooserRules.setCurrentDirectory(new File(System.getProperty("user.home")));
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		fileChooserOther.setCurrentDirectory(new File(System.getProperty("user.home")));
 		
 		btnRules.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -141,9 +141,9 @@ public class MainLayout {
 		});
 		btnHam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooser.showOpenDialog(btnHam);
+				int result = fileChooserOther.showOpenDialog(btnHam);
 				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
+					File selectedFile = fileChooserOther.getSelectedFile();
 					txtHam.setText(selectedFile.getAbsolutePath());
 				}
 			}
@@ -151,9 +151,9 @@ public class MainLayout {
 
 		btnSpam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooser.showOpenDialog(btnSpam);
+				int result = fileChooserOther.showOpenDialog(btnSpam);
 				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
+					File selectedFile = fileChooserOther.getSelectedFile();
 					txtSpam.setText(selectedFile.getAbsolutePath());
 				}
 			}
@@ -466,15 +466,15 @@ public class MainLayout {
 	    try {
 	        Scanner sc = new Scanner(file);
 	        if(sc.hasNextLine()){   
-	        i = sc.nextLine();
+	        	i = sc.nextLine();
 	            txtRules.setText(i);
 	            if(sc.hasNextLine()){
-	            i = sc.nextLine();
-	            txtHam.setText(i);
-	            if(sc.hasNextLine()){
-	            i = sc.nextLine();
-	            txtSpam.setText(i);
-	            }
+	            	i = sc.nextLine();
+	            	txtHam.setText(i);
+	            	if(sc.hasNextLine()){
+	            		i = sc.nextLine();
+	            		txtSpam.setText(i);
+	            	}
 	            }
 	        sc.close();
 	        } 
@@ -505,32 +505,32 @@ public class MainLayout {
 		}
 	}
 	private void evaluationManual(){
-		AntiSpamFilterProblem problema=null;
-		SpamSolution sol=null;
+		AntiSpamFilterProblem problem=null;
+		SpamSolution solution=null;
 		int size = rulesMap.size();
 		double temp=0.0;
 		DefaultTableModel modelManual = (DefaultTableModel)table_configuracaoManual.getModel();
 		try {
-			 problema = new AntiSpamFilterProblem(txtRules.getText(),txtSpam.getText(),txtHam.getText(),rulesMap);
-			  sol = new SpamSolution(-5.0,5.0,2,size);
+			problem = new AntiSpamFilterProblem(txtRules.getText(),txtSpam.getText(),txtHam.getText(),rulesMap);
+			solution = new SpamSolution(-5.0,5.0,2,size);
 			  for(int i=0;i<size;i++){
 				  if(modelManual.getValueAt(i, 1)==null)
-					  sol.setVariableValue(i, temp);
+					  solution.setVariableValue(i, temp);
 				  else{
 					  temp=(double)modelManual.getValueAt(i, 1);
 				  if(temp>=5.0)
-					  sol.setVariableValue(i, 5.0);
+					  solution.setVariableValue(i, 5.0);
 				  if(temp<=-5.0)
-					  sol.setVariableValue(i,-5.0);
+					  solution.setVariableValue(i,-5.0);
 				  if(temp>5.0 && temp<-5.0 )
-					  sol.setVariableValue(i, temp);
+					  solution.setVariableValue(i, temp);
 				  if(temp>5.0 && temp<-5.0 )
-					  sol.setVariableValue(i, temp);
+					  solution.setVariableValue(i, temp);
 				  }
 			  }
-			  problema.evaluate(sol);
-			  CM_tx_FalsePositive.setText(Double.toString(sol.getObjective(0)));
-			  CM_tx_FalseNegative.setText(Double.toString(sol.getObjective(1)));
+			  problem.evaluate(solution);
+			  CM_tx_FalsePositive.setText(Double.toString(solution.getObjective(0)));
+			  CM_tx_FalseNegative.setText(Double.toString(solution.getObjective(1)));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
