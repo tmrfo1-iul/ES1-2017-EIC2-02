@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
 
@@ -120,13 +121,20 @@ public class MainLayout {
 
 		JButton btnSpam = new JButton("");
 		btnSpam.setIcon(new ImageIcon(MainLayout.class.getResource("/imageWindowBuilder/foldericon.png")));
+		JFileChooser fileChooserRules = new JFileChooser();
 		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter filterRules = new FileNameExtensionFilter("CF Files", "cf", "cf");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("LOG Files", "log", "log");
+		fileChooserRules.setFileFilter(filterRules);
+		fileChooser.setFileFilter(filter);
+		fileChooserRules.setCurrentDirectory(new File(System.getProperty("user.home")));
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		
 		btnRules.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooser.showOpenDialog(btnRules);
+				int result = fileChooserRules.showOpenDialog(btnRules);
 				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
+					File selectedFile = fileChooserRules.getSelectedFile();
 					txtRules.setText(selectedFile.getAbsolutePath());
 				}
 			}
@@ -157,6 +165,7 @@ public class MainLayout {
 		btnAvaliar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				evaluationManual();
 				// TODO avaliar pesos da avaliacao manual
 			}
 		});
@@ -388,12 +397,54 @@ public class MainLayout {
 		table_configuracaoAutomatica = new JTable();
 		table_configuracaoAutomatica.setEnabled(false);
 		table_configuracaoAutomatica.setRowSelectionAllowed(false);
-		table_configuracaoAutomatica.setModel(new DefaultTableModel(new Object[][] {  },new String[] { "Rules", "Weights" }));
+		table_configuracaoAutomatica.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Rules", "Weights"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Double.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table_configuracaoAutomatica.getColumnModel().getColumn(0).setResizable(false);
+		table_configuracaoAutomatica.getColumnModel().getColumn(1).setResizable(false);
 		scrollPane_2.setViewportView(table_configuracaoAutomatica);
 		table_configuracaoManual = new JTable();
 		table_configuracaoManual.setRowSelectionAllowed(false);
 		table_configuracaoManual
-				.setModel(new DefaultTableModel(new Object[][] {  }, new String[] { "Rules", "Weights" }));
+				.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Rules", "Weights"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Double.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table_configuracaoManual.getColumnModel().getColumn(0).setResizable(false);
+		table_configuracaoManual.getColumnModel().getColumn(1).setResizable(false);
 		scrollPane.setViewportView(table_configuracaoManual);
 		frame.getContentPane().setLayout(groupLayout);
 	}
@@ -452,6 +503,40 @@ public class MainLayout {
 		} catch (IOException e) {
 			
 		}
+	}
+	private void evaluationManual(){
+		AntiSpamFilterProblem problema=null;
+		SpamSolution sol=null;
+		int size = rulesMap.size();
+		double temp=0.0;
+		DefaultTableModel modelManual = (DefaultTableModel)table_configuracaoManual.getModel();
+		try {
+			 problema = new AntiSpamFilterProblem(txtRules.getText(),txtSpam.getText(),txtHam.getText(),rulesMap);
+			  sol = new SpamSolution(-5.0,5.0,2,size);
+			  for(int i=0;i<size;i++){
+				  if(modelManual.getValueAt(i, 1)==null)
+					  sol.setVariableValue(i, temp);
+				  else{
+					  temp=(double)modelManual.getValueAt(i, 1);
+				  if(temp>=5.0)
+					  sol.setVariableValue(i, 5.0);
+				  if(temp<=-5.0)
+					  sol.setVariableValue(i,-5.0);
+				  if(temp>5.0 && temp<-5.0 )
+					  sol.setVariableValue(i, temp);
+				  if(temp>5.0 && temp<-5.0 )
+					  sol.setVariableValue(i, temp);
+				  }
+			  }
+			  problema.evaluate(sol);
+			  CM_tx_FalsePositive.setText(Double.toString(sol.getObjective(0)));
+			  CM_tx_FalseNegative.setText(Double.toString(sol.getObjective(1)));
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
 

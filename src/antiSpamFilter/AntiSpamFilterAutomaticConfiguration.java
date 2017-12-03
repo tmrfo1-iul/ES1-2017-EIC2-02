@@ -14,10 +14,12 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class AntiSpamFilterAutomaticConfiguration {
   private static final int INDEPENDENT_RUNS = 5 ;
+  private static HashMap<String, Integer> rulesMap = new HashMap<String, Integer>();
 
   public static void main(String[] args) throws IOException {
     String experimentBaseDirectory = "experimentBaseDirectory";
@@ -25,7 +27,7 @@ public class AntiSpamFilterAutomaticConfiguration {
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     // FIXME change to dynamic file paths
     AntiSpamFilterProblem problem = 
-    		new AntiSpamFilterProblem("logFiles/rules.cf", "logFiles/spam.log", "logFiles/ham.log");
+    		new AntiSpamFilterProblem("logFiles/rules.cf", "logFiles/spam.log", "logFiles/ham.log", rulesMap);
     problemList.add(new ExperimentProblem<>(problem));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
