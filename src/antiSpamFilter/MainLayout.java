@@ -135,7 +135,9 @@ public class MainLayout {
 				int result = fileChooserRules.showOpenDialog(btnRules);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooserRules.getSelectedFile();
+					if(selectedFile.exists()){
 					txtRules.setText(selectedFile.getAbsolutePath());
+					}
 				}
 			}
 		});
@@ -144,7 +146,9 @@ public class MainLayout {
 				int result = fileChooserOther.showOpenDialog(btnHam);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooserOther.getSelectedFile();
-					txtHam.setText(selectedFile.getAbsolutePath());
+					if(selectedFile.exists()){
+						txtHam.setText(selectedFile.getAbsolutePath());
+						}
 				}
 			}
 		});
@@ -154,7 +158,9 @@ public class MainLayout {
 				int result = fileChooserOther.showOpenDialog(btnSpam);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooserOther.getSelectedFile();
-					txtSpam.setText(selectedFile.getAbsolutePath());
+					if(selectedFile.exists()){
+						txtSpam.setText(selectedFile.getAbsolutePath());
+						}
 				}
 			}
 		});
