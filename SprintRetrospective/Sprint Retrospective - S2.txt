@@ -16,6 +16,7 @@ Not Working:
   -Tudo o que foi acordado no sprint foi realizado.
   
   
+  
   Notas:
   
   	* - Como nos apercebemos disso terminamos o trabalho da geraçao de pesos e de implementaçao de codigo(para a geraçao manual e otima). 
