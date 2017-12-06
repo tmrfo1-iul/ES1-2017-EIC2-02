@@ -1,0 +1,22 @@
+Sprint Retrospective of Sprint 2
+
+
+Working:
+
+  -Redesenhamos o GUI para cumprir as especificaçoes pedidas pelo Cliente. O trabalho foi realizado com sucesso.
+  -Implementamos a funcionalidade de procurar os ficheiros e guardar os caminhos para esses ficheiros. Implementaçao com sucesso.
+  -Implementamos a geraçao dos pesos de forma manual. Implementado com sucesso.
+  -Ao realizar a geraçao dos pesos de forma manual tivemos de fazer o metodo evaluate() da class AbstractDoubleProblem,
+  	ao fazer isto o codigo que o professor disponibilizou na class AntiSpamFilterAutomaticConfiguration ja passou a gerar os pesos de forma otima.
+  	Este passo apenas seria implementado no Sprint 3*.
+
+
+Not Working:
+
+  -Tudo o que foi acordado no sprint foi realizado.
+  
+  
+  Notas:
+  
+  	* - Como nos apercebemos disso terminamos o trabalho da geraçao de pesos e de implementaçao de codigo(para a geraçao manual e otima). 
+  	Com isto, deixaremos para o Sprint 3 os JUnit test cases e 75% de test coverage.
