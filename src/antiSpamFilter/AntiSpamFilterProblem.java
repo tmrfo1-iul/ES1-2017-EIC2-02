@@ -22,8 +22,7 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	private final List<List<String>> spamLog;
 	private final List<List<String>> hamLog;
 
-	public AntiSpamFilterProblem(String rulesPath, String spamPath, String hamPath, HashMap rules) throws IOException {
-		//rules = readRules(rulesPath);
+	public AntiSpamFilterProblem(String spamPath, String hamPath, HashMap<String, Integer> rules) throws IOException {
 		spamLog = readLog(spamPath, "spam");
 		hamLog = readLog(hamPath, "ham");
 		this.rules=rules;
@@ -42,24 +41,8 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		setLowerLimit(lowerLimit);
 		setUpperLimit(upperLimit);
 	}
-
-//	private HashMap<String, Integer> readRules(String filePath) throws IOException {
-//		HashMap<String, Integer> map = new HashMap<String, Integer>();
-//		Path path = Paths.get(filePath);
-//		try {
-//			Scanner scanner = new Scanner(path);
-//			int it = 0;
-//			while (scanner.hasNextLine()) {
-//				map.put(scanner.nextLine(), it);
-//				it++;
-//			}
-//			scanner.close();
-//			return map;
-//		} catch (IOException e) {
-//			throw new IOException("Invalid path to rules file.");
-//		}
-//	}
-
+	
+	
 	private List<List<String>> readLog(String filePath, String fileType) throws IOException{
 		List<List<String>> list = new ArrayList<>();
 		Path path = Paths.get(filePath);

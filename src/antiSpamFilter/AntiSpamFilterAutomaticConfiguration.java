@@ -19,15 +19,12 @@ import java.util.List;
 
 public class AntiSpamFilterAutomaticConfiguration {
   private static final int INDEPENDENT_RUNS = 5 ;
-  private static HashMap<String, Integer> rulesMap = new HashMap<String, Integer>();
 
-  public static void main(String[] args) throws IOException {
+  public static void run(String pathSpam, String pathHam, HashMap<String, Integer> rulesMap) throws IOException {
     String experimentBaseDirectory = "experimentBaseDirectory";
 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    // FIXME change to dynamic file paths
-    AntiSpamFilterProblem problem = 
-    		new AntiSpamFilterProblem("logFiles/rules.cf", "logFiles/spam.log", "logFiles/ham.log", rulesMap);
+    AntiSpamFilterProblem problem = new AntiSpamFilterProblem(pathSpam, pathHam, rulesMap);
     problemList.add(new ExperimentProblem<>(problem));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList =
@@ -51,7 +48,6 @@ public class AntiSpamFilterAutomaticConfiguration {
     new ComputeQualityIndicators<>(experiment).run() ;
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
-    
   }
 
   static List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureAlgorithmList(

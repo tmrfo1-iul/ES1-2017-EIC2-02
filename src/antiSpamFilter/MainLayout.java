@@ -9,14 +9,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -172,7 +168,6 @@ public class MainLayout {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				evaluationManual();
-				// TODO avaliar pesos da avaliacao manual
 			}
 		});
 
@@ -214,7 +209,13 @@ public class MainLayout {
 		btnGerarConfigurao.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO gerar configuracao optima
+				try {
+					AntiSpamFilterAutomaticConfiguration.run(txtSpam.getText(), txtHam.getText(), rulesMap);
+					readOptimalResults();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -411,7 +412,7 @@ public class MainLayout {
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, Double.class
+				String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -454,14 +455,61 @@ public class MainLayout {
 		scrollPane.setViewportView(table_configuracaoManual);
 		frame.getContentPane().setLayout(groupLayout);
 	}
+	
+	
+	private void readOptimalResults() {
+		File fileEvaluation = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.rf");
+		File fileWeight = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.rs");
+		
+	    try {
+	        Scanner sc = new Scanner(fileEvaluation);
+	        int[] minFN = new int[]{Integer.MAX_VALUE, Integer.MAX_VALUE};
+	        int chosenLine = -1;
+	        int iterator = 0;
+	        while(sc.hasNextLine()){   
+	        	String[] line = sc.nextLine().split(" ");
+	        	int i0 = (int) Double.parseDouble(line[0]);
+	        	int i1 = (int) Double.parseDouble(line[1]);
+	        	if( i1 < minFN[1] || 
+	        			(i1 == minFN[1] && i0 < minFN[0])){
+	        		minFN[0] = i0;
+	        		minFN[1] = i1;
+	        		chosenLine = iterator;
+	        	}
+	        	iterator++;
+	        }
+	    	A_tx_FalsePositive.setText(String.valueOf(minFN[0]));
+	    	A_tx_FalseNegative.setText(String.valueOf(minFN[1]));
+	        sc.close();
+	        
+	        sc = new Scanner(fileWeight);
+	        iterator = 0;
+	        while(sc.hasNextLine()){   
+	        	String[] line = sc.nextLine().split(" ");
+	        	if(iterator == chosenLine){
+	        		DefaultTableModel modelAutomatico = (DefaultTableModel)table_configuracaoAutomatica.getModel();
+	        		for(int i = 0; i < line.length; i++){
+	        			modelAutomatico.setValueAt(line[i], i, 1);
+	        		}
+	        	}
+	        	iterator++;
+	        }
+	        sc.close();
+	    }
+	    catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	
 	private void saveFilePaths(){
 		try {
-			PrintWriter writer = new PrintWriter("savedFilePaths","UTF-8");
+			PrintWriter writer = new PrintWriter("savedFilePaths");
 				writer.println(txtRules.getText());
 				writer.println(txtHam.getText());
 				writer.print(txtSpam.getText());
 			writer.close();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -517,7 +565,7 @@ public class MainLayout {
 		double temp=0.0;
 		DefaultTableModel modelManual = (DefaultTableModel)table_configuracaoManual.getModel();
 		try {
-			problem = new AntiSpamFilterProblem(txtRules.getText(),txtSpam.getText(),txtHam.getText(),rulesMap);
+			problem = new AntiSpamFilterProblem(txtSpam.getText(),txtHam.getText(),rulesMap);
 			solution = new SpamSolution(-5.0,5.0,2,size);
 			  for(int i=0;i<size;i++){
 				  if(modelManual.getValueAt(i, 1)==null)
