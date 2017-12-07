@@ -568,8 +568,10 @@ public class MainLayout {
 			problem = new AntiSpamFilterProblem(txtSpam.getText(),txtHam.getText(),rulesMap);
 			solution = new SpamSolution(-5.0,5.0,2,size);
 			  for(int i=0;i<size;i++){
-				  if(modelManual.getValueAt(i, 1)==null)
+				  if(modelManual.getValueAt(i, 1)==null){
+					  temp=0.0;
 					  solution.setVariableValue(i, temp);
+				  }
 				  else{
 					  temp=(double)modelManual.getValueAt(i, 1);
 				  if(temp>=5.0)
@@ -578,8 +580,7 @@ public class MainLayout {
 					  solution.setVariableValue(i,-5.0);
 				  if(temp>5.0 && temp<-5.0 )
 					  solution.setVariableValue(i, temp);
-				  if(temp>5.0 && temp<-5.0 )
-					  solution.setVariableValue(i, temp);
+
 				  }
 			  }
 			  problem.evaluate(solution);
