@@ -13,6 +13,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import javax.management.modelmbean.ModelMBeanOperationInfo;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -85,6 +87,7 @@ public class MainLayout {
 						"Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
 					saveFilePaths();
+					saveWeights("teste");
 				}
 				System.exit(0);
 			}
@@ -175,7 +178,7 @@ public class MainLayout {
 		btnGravar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO guardar os pesos manuais para um ficheiro
+				saveWeights("Manual");
 			}
 		});
 
@@ -224,6 +227,7 @@ public class MainLayout {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO guardar os pesos optimos para um ficheiro
+				saveWeights("Automatico");
 			}
 		});
 
@@ -499,6 +503,27 @@ public class MainLayout {
 	    catch (FileNotFoundException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	private void saveWeights(String weigh){
+		try {
+			PrintWriter writer = new PrintWriter("savedWeights" +weigh);
+    	if (weigh.equals("Automatico")){
+			DefaultTableModel modelAutomatico = (DefaultTableModel)table_configuracaoAutomatica.getModel();
+			for(int i =0; i<modelAutomatico.getRowCount();i++){
+				writer.println(modelAutomatico.getValueAt(i, 1));
+			}
+    	}else{
+    		DefaultTableModel modeloManual = (DefaultTableModel)table_configuracaoManual.getModel();
+			for(int i =0; i<modeloManual.getRowCount();i++){
+				writer.println(modeloManual.getValueAt(i, 1));
+			}
+    	}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
