@@ -577,7 +577,7 @@ public class MainLayout {
 		progressDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		Container content = new JFrame().getContentPane();
 	    
-	    ImageIcon bufferingIcon = new ImageIcon("ajax-loader.gif");
+	    ImageIcon bufferingIcon = new ImageIcon(this.getClass().getResource("/imageWindowBuilder/ajax-loader.gif"));
 	    content.add(new JLabel("Calculating Optimal Solution...", bufferingIcon, JLabel.CENTER));
 	    Point parentLocation = frame.getLocation();
 	    progressDialog.add(content);
