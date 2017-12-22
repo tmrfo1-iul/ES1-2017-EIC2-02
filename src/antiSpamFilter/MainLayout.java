@@ -48,6 +48,8 @@ public class MainLayout {
 	private JButton btnEvaluateManual;
 	private JButton btnGenerateOptimal;
 	private JDialog progressDialog;
+	private JScrollPane scrollPaneTabel1;
+	private JScrollPane scrollPaneTabel2;
 	private HashMap<String, Integer> rulesMap = new HashMap<String, Integer>();
 
 	/**
@@ -77,7 +79,7 @@ public class MainLayout {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame("AntiSpamConfigurationForLeisureMailbox");
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 667);
@@ -163,7 +165,8 @@ public class MainLayout {
 			}
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPaneTabel1 = new JScrollPane();
+		scrollPaneTabel2 = new JScrollPane();
 
 		btnEvaluateManual = new JButton("Evaluate");
 		btnEvaluateManual.setEnabled(false);
@@ -190,7 +193,7 @@ public class MainLayout {
 		txtManualFNegative.setColumns(10);
 		JLabel lblManualFPositive = new JLabel("False Positive:");
 		JLabel lblManualFNegative = new JLabel("False Negative:");
-		JScrollPane scrollPane_2 = new JScrollPane();
+		
 		btnGenerateOptimal = new JButton("Generate configuration");
 		btnGenerateOptimal.setEnabled(false);
 		btnGenerateOptimal.addActionListener(new ActionListener() {
@@ -222,9 +225,9 @@ public class MainLayout {
 			}
 		});
 
-		JLabel A_lblFalsePositive = new JLabel("False Positive:");
+		JLabel lblFalsePositive = new JLabel("False Positive:");
 
-		JLabel A_lblFalseNegative = new JLabel("False Negative:");
+		JLabel lblFalseNegative = new JLabel("False Negative:");
 
 		txtOptimalFPositive = new JTextField();
 		txtOptimalFPositive.setEditable(false);
@@ -276,8 +279,8 @@ public class MainLayout {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
-								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
+								.addComponent(scrollPaneTabel2, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scrollPaneTabel1, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
 							.addGap(49)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
@@ -287,11 +290,11 @@ public class MainLayout {
 										.addComponent(btnEvaluateManual, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(A_lblFalseNegative)
+										.addComponent(lblFalseNegative)
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addComponent(txtOptimalFNegative, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
 									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(A_lblFalsePositive)
+										.addComponent(lblFalsePositive)
 										.addGap(10)
 										.addComponent(txtOptimalFPositive, 0, 0, Short.MAX_VALUE)))
 								.addGroup(groupLayout.createSequentialGroup()
@@ -333,7 +336,7 @@ public class MainLayout {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
+							.addComponent(scrollPaneTabel1, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(26)
 							.addComponent(btnEvaluateManual)
@@ -355,81 +358,25 @@ public class MainLayout {
 							.addComponent(btnGravarOptimal)
 							.addGap(18)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(A_lblFalsePositive)
+								.addComponent(lblFalsePositive)
 								.addComponent(txtOptimalFPositive, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(A_lblFalseNegative)
+								.addComponent(lblFalseNegative)
 								.addComponent(txtOptimalFNegative, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
+						.addComponent(scrollPaneTabel2, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING))).addGroup(groupLayout.createSequentialGroup()
 					.addGap(118)
 					.addComponent(btnFilePaths))
 		);
 
-		tableOptimalConfig = new JTable();
-		tableOptimalConfig.setEnabled(false);
-		tableOptimalConfig.setRowSelectionAllowed(false);
-		
-		tableOptimalConfig.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Rules", "Weights"
-			}
-		) {
-			private static final long serialVersionUID = 1L;
-
-			Class<?>[] columnTypes = new Class[] {
-				String.class, String.class
-			};
-			public Class<?> getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		tableOptimalConfig.getColumnModel().getColumn(0).setResizable(false);
-		tableOptimalConfig.getColumnModel().getColumn(1).setResizable(false);
-		scrollPane_2.setViewportView(tableOptimalConfig);
-		tableManualConfig = new JTable();
-		tableManualConfig.setRowSelectionAllowed(false);
-		tableManualConfig
-				.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Rules", "Weights"
-			}
-		) {
-			private static final long serialVersionUID = 1L;
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] {
-				String.class, Double.class
-			};
-			public Class<?> getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		tableManualConfig.getColumnModel().getColumn(0).setResizable(false);
-		tableManualConfig.getColumnModel().getColumn(1).setResizable(false);
-		scrollPane.setViewportView(tableManualConfig);
+		resetTableModels();
 		frame.getContentPane().setLayout(groupLayout);
 	}
 	
 	
-	private void readOptimalResults() {
+	public void readOptimalResults() {
 		File fileEvaluation = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.rf");
 		File fileWeight = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.rs");
 		
@@ -442,8 +389,7 @@ public class MainLayout {
 	        	String[] line = sc.nextLine().split(" ");
 	        	int i0 = (int) Double.parseDouble(line[0]);
 	        	int i1 = (int) Double.parseDouble(line[1]);
-	        	if( i1 < minFN[1] || 
-	        			(i1 == minFN[1] && i0 < minFN[0])){
+	        	if( i1 < minFN[1] || (i1 == minFN[1] && i0 < minFN[0])){
 	        		minFN[0] = i0;
 	        		minFN[1] = i1;
 	        		chosenLine = iterator;
@@ -461,7 +407,7 @@ public class MainLayout {
 	        	if(iterator == chosenLine){
 	        		DefaultTableModel modelAutomatico = (DefaultTableModel)tableOptimalConfig.getModel();
 	        		for(int i = 0; i < line.length; i++){
-	        			modelAutomatico.setValueAt(line[i], i, 1);
+	        			modelAutomatico.setValueAt(Double.parseDouble(line[i]), i, 1);
 	        		}
 	        	}
 	        	iterator++;
@@ -474,19 +420,22 @@ public class MainLayout {
 	    }
 	}
 	
-	private void saveWeights(String weigh){
+	
+	public void saveWeights(String weigh){
 		try {
-			PrintWriter writer = new PrintWriter(new FileOutputStream(new File("savedWeights" +weigh), false));
+			PrintWriter writer = new PrintWriter(new FileOutputStream(new File(txtRules.getText()), false));
     	if (weigh.equals("Automatico")){
 			DefaultTableModel modelAutomatico = (DefaultTableModel)tableOptimalConfig.getModel();
 			for(int i = 0; i <modelAutomatico.getRowCount(); i++){
-				String x = (String) modelAutomatico.getValueAt(i, 1);
+				Double x = (Double) modelAutomatico.getValueAt(i, 1);
+				writer.print(modelAutomatico.getValueAt(i, 0) + " ");
 				writer.println(x == null ? 0 : x);
 			}
     	}else{
     		DefaultTableModel modeloManual = (DefaultTableModel)tableManualConfig.getModel();
 			for(int i =0; i<modeloManual.getRowCount();i++){
-				String x = (String) modeloManual.getValueAt(i, 1);
+				Double x = (Double) modeloManual.getValueAt(i, 1);
+				writer.print(modeloManual.getValueAt(i, 0) + " ");
 				writer.println(x == null ? 0 : x);
 			}
     	}
@@ -498,7 +447,7 @@ public class MainLayout {
 	}
 	
 	
-	private void saveFilePaths(){
+	public void saveFilePaths(){
 		try {
 			PrintWriter writer = new PrintWriter("savedFilePaths");
 				writer.println(txtRules.getText());
@@ -509,7 +458,9 @@ public class MainLayout {
 			e.printStackTrace();
 		}
 	}
-	private void readSavedFilePaths(){
+	
+	
+	public void readSavedFilePaths(){
 		File file = new File("savedFilePaths");
 		String i;
 	    try {
@@ -533,19 +484,25 @@ public class MainLayout {
 	    }
 	}
 	
-	private void processRulesFile(){
-		String line=null;
-		DefaultTableModel modelManual = (DefaultTableModel)tableManualConfig.getModel();
-		DefaultTableModel modelAutomatico = (DefaultTableModel)tableOptimalConfig.getModel();
+	
+	public void processRulesFile(){
+		resetTableModels();
+		DefaultTableModel modelManual = (DefaultTableModel) tableManualConfig.getModel();
+		DefaultTableModel modelAutomatico = (DefaultTableModel) tableOptimalConfig.getModel();
 		Path path = Paths.get(txtRules.getText());
 		try {
 			Scanner scanner = new Scanner(path);
 			int it = 0;
 			while (scanner.hasNextLine()) {
-				line=scanner.nextLine();
-				rulesMap.put(line, it);
-				modelAutomatico.addRow(new Object[]{line, null});
-				modelManual.addRow(new Object[]{line, null});
+				String[] line = scanner.nextLine().split(" ");
+				rulesMap.put(line[0], it);
+				if(line.length == 2){
+					modelAutomatico.addRow(new Object[]{line[0], Double.parseDouble(line[1])});
+					modelManual.addRow(new Object[]{line[0], Double.parseDouble(line[1])});
+				}else{
+					modelAutomatico.addRow(new Object[]{line[0], null});
+					modelManual.addRow(new Object[]{line[0], null});
+				}
 				it++;
 			}
 			scanner.close();
@@ -557,11 +514,13 @@ public class MainLayout {
 			promptUser("No file paths selected!", false);
 		}
 	}
-	private void evaluationManual(){
-		AntiSpamFilterProblem problem=null;
-		SpamSolution solution=null;
+	
+	
+	public void evaluationManual(){
+		AntiSpamFilterProblem problem = null;
+		SpamSolution solution = null;
 		int size = rulesMap.size();
-		double temp=0.0;
+		double temp = 0.0;
 		DefaultTableModel modelManual = (DefaultTableModel)tableManualConfig.getModel();
 		try {
 			problem = new AntiSpamFilterProblem(txtSpam.getText(),txtHam.getText(),rulesMap);
@@ -570,35 +529,36 @@ public class MainLayout {
 				  if(modelManual.getValueAt(i, 1)==null){
 					  temp=0.0;
 					  solution.setVariableValue(i, temp);
+				  }else{
+					  temp = (Double) modelManual.getValueAt(i, 1);
 				  }
-				  else{
-					  temp=(double)modelManual.getValueAt(i, 1);
-				  if(temp>=5.0)
-					  solution.setVariableValue(i, 5.0);
-				  if(temp<=-5.0)
-					  solution.setVariableValue(i,-5.0);
-				  if(temp>5.0 && temp<-5.0 )
+				  
+				  if(temp < 5.0 && temp > -5.0 ){
 					  solution.setVariableValue(i, temp);
-
+				  }else if(temp >= 5.0){
+					  solution.setVariableValue(i, 5.0);
+				  }else if(temp <= -5.0){
+					  solution.setVariableValue(i,-5.0);
 				  }
 			  }
 			  problem.evaluate(solution);
 			  txtManualFPositive.setText(Double.toString(solution.getObjective(0)));
 			  txtManualFNegative.setText(Double.toString(solution.getObjective(1)));
-
 		} catch (IOException e) {
 			promptUser("An error occurred while trying to load the files from memory.\n"
 					+ "Please verify if the paths chosen are incorrect or missing.", true);
 		}
 	}
 	
-	private void promptUser(String message, boolean error){
+	
+	public void promptUser(String message, boolean error){
 		String title = error ?  "Error!" : "Warning!";
 		int iconType = error ? JOptionPane.ERROR_MESSAGE : JOptionPane.WARNING_MESSAGE;
 		JOptionPane.showMessageDialog(frame, message, title, iconType);
 	}
 	
-	private void createProgressPopUp(){
+	
+	public void createProgressPopUp(){
 		progressDialog = new JDialog(frame, "Progress", true);
 		progressDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		Container content = new JFrame().getContentPane();
@@ -610,5 +570,66 @@ public class MainLayout {
 	    progressDialog.setLocation(parentLocation.x + frame.getWidth() / 4, parentLocation.y + frame.getHeight() / 2);
 	    progressDialog.setSize(300, 100);
 	    progressDialog.setVisible(true);
+	}
+	
+	
+	public  void resetTableModels() {
+		tableOptimalConfig = new JTable();
+		tableOptimalConfig.setEnabled(false);
+		tableOptimalConfig.setRowSelectionAllowed(false);
+		
+		tableOptimalConfig.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+						"Rules", "Weights"
+				}
+				){
+			private static final long serialVersionUID = 1L;
+			
+			Class<?>[] columnTypes = new Class[] {
+					String.class, Double.class
+			};
+			public Class<?> getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+					false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tableOptimalConfig.getColumnModel().getColumn(0).setResizable(false);
+		tableOptimalConfig.getColumnModel().getColumn(1).setResizable(false);
+		tableManualConfig = new JTable();
+		tableManualConfig.setRowSelectionAllowed(false);
+		tableManualConfig
+		.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+						"Rules", "Weights"
+				}
+				) {
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] {
+					String.class, Double.class
+			};
+			public Class<?> getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+					false, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tableManualConfig.getColumnModel().getColumn(0).setResizable(false);
+		tableManualConfig.getColumnModel().getColumn(1).setResizable(false);
+		scrollPaneTabel1.setViewportView(tableManualConfig);
+		scrollPaneTabel2.setViewportView(tableOptimalConfig);
 	}
 }
