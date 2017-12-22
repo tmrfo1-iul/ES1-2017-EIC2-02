@@ -203,6 +203,7 @@ public class MainLayout {
 						} catch (IOException e1) {
 							promptUser("An error occurred while trying to load the files from memory.\n"
 									+ "Please verify if the paths chosen are incorrect or missing.", true);
+							progressDialog.dispose();
 						}
 					}
 				}).start();
