@@ -182,33 +182,15 @@ public class MainLayout {
 				saveWeights("Manual");
 			}
 		});
-
 		txtManualFPositive = new JTextField();
 		txtManualFPositive.setEditable(false);
 		txtManualFPositive.setColumns(10);
-
 		txtManualFNegative = new JTextField();
 		txtManualFNegative.setEditable(false);
 		txtManualFNegative.setColumns(10);
-
 		JLabel lblManualFPositive = new JLabel("False Positive:");
-
 		JLabel lblManualFNegative = new JLabel("False Negative:");
-
-//		JLabel label = new JLabel("False Negative:");
-
-//		JTextField textField_2 = new JTextField();
-//		textField_2.setColumns(10);
-
-//		JLabel label_1 = new JLabel("False Positive:");
-
-//		JTextField textField_3 = new JTextField();
-//		textField_3.setColumns(10);
-
-//		JScrollPane scrollPane_1 = new JScrollPane();
-
 		JScrollPane scrollPane_2 = new JScrollPane();
-
 		btnGenerateOptimal = new JButton("Generate configuration");
 		btnGenerateOptimal.setEnabled(false);
 		btnGenerateOptimal.addActionListener(new ActionListener() {
@@ -291,19 +273,6 @@ public class MainLayout {
 											.addComponent(btnFilePaths)
 											.addGap(130)))
 									.addComponent(btnSpam, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))))
-//						.addGroup(groupLayout.createSequentialGroup()
-//							.addContainerGap()
-//							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
-//							.addGap(26)
-//							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-//								.addGroup(groupLayout.createSequentialGroup()
-//									.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-//									.addGap(18)
-//									.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))
-//								.addGroup(groupLayout.createSequentialGroup()
-//									.addComponent(label, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-//									.addGap(12)
-//									.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -394,22 +363,7 @@ public class MainLayout {
 								.addComponent(txtOptimalFNegative, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-//						.addGroup(groupLayout.createSequentialGroup()
-//							.addGap(344)
-//							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE))
-//						.addGroup(groupLayout.createSequentialGroup()
-//							.addGap(436)
-//							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-//								.addGroup(groupLayout.createSequentialGroup()
-//									.addGap(3)
-//									.addComponent(label_1))
-//								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-//							.addGap(11)
-//							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-//								.addComponent(label)
-//								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
-				)).addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING))).addGroup(groupLayout.createSequentialGroup()
 					.addGap(118)
 					.addComponent(btnFilePaths))
 		);
