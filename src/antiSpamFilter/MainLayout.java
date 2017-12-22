@@ -376,6 +376,9 @@ public class MainLayout {
 	}
 	
 	
+	/**
+	 *Selects the solution with less False Negatives, which is the more appropriate solution.
+	 */
 	public void readOptimalResults() {
 		File fileEvaluation = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.rf");
 		File fileWeight = new File("experimentBaseDirectory/referenceFronts/AntiSpamFilterProblem.rs");
@@ -420,7 +423,9 @@ public class MainLayout {
 	    }
 	}
 	
-	
+	/**
+	 *Saves weights.
+	 */
 	public void saveWeights(String weigh){
 		try {
 			PrintWriter writer = new PrintWriter(new FileOutputStream(new File(txtRules.getText()), false));
@@ -446,7 +451,9 @@ public class MainLayout {
 		}
 	}
 	
-	
+	/**
+	 *Saves the inputed paths in savedFilePaths.txt.
+	 */
 	public void saveFilePaths(){
 		try {
 			PrintWriter writer = new PrintWriter("savedFilePaths");
@@ -459,7 +466,10 @@ public class MainLayout {
 		}
 	}
 	
-	
+	/**
+	 *Checks if there is any paths previously saved and loads them 
+	 *into the corresponding JTextField.
+	 */
 	public void readSavedFilePaths(){
 		File file = new File("savedFilePaths");
 		String i;
@@ -484,7 +494,9 @@ public class MainLayout {
 	    }
 	}
 	
-	
+	/**
+	 *Processes the rules in rules.txt file and loads them into both tables.
+	 */
 	public void processRulesFile(){
 		resetTableModels();
 		DefaultTableModel modelManual = (DefaultTableModel) tableManualConfig.getModel();
@@ -515,7 +527,9 @@ public class MainLayout {
 		}
 	}
 	
-	
+	/**
+	 *Evaluates the weights inputed by the user in the table corresponding to the manual configuration.
+	 */
 	public void evaluationManual(){
 		AntiSpamFilterProblem problem = null;
 		SpamSolution solution = null;
@@ -550,14 +564,18 @@ public class MainLayout {
 		}
 	}
 	
-	
+	/**
+	 *Prompts the user through a dialog with useful information about the action taken.
+	 */
 	public void promptUser(String message, boolean error){
 		String title = error ?  "Error!" : "Warning!";
 		int iconType = error ? JOptionPane.ERROR_MESSAGE : JOptionPane.WARNING_MESSAGE;
 		JOptionPane.showMessageDialog(frame, message, title, iconType);
 	}
 	
-	
+	/**
+	 *Creates a loading Progress popup.
+	 */
 	public void createProgressPopUp(){
 		progressDialog = new JDialog(frame, "Progress", true);
 		progressDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -572,7 +590,9 @@ public class MainLayout {
 	    progressDialog.setVisible(true);
 	}
 	
-	
+	/**
+	 *Reset tables models.
+	 */
 	public  void resetTableModels() {
 		tableOptimalConfig = new JTable();
 		tableOptimalConfig.setEnabled(false);

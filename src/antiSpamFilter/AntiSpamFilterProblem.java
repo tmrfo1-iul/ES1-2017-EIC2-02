@@ -22,6 +22,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 	private final List<List<String>> spamLog;
 	private final List<List<String>> hamLog;
 
+	/**
+	 *Constructor instantiates a AntiSpamFilterProblem.
+	 */
 	public AntiSpamFilterProblem(String spamPath, String hamPath, HashMap<String, Integer> rules) throws IOException {
 		spamLog = readLog(spamPath, "spam");
 		hamLog = readLog(hamPath, "ham");
@@ -42,8 +45,10 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		setUpperLimit(upperLimit);
 	}
 	
-	
-	private List<List<String>> readLog(String filePath, String fileType) throws IOException{
+	/**
+	 *Reads a file (ham or spam) and saves it to a list of e-mails, where each e-mail is itself a list of rules.
+	 */
+	public List<List<String>> readLog(String filePath, String fileType) throws IOException{
 		List<List<String>> list = new ArrayList<>();
 		Path path = Paths.get(filePath);
 		try {
@@ -64,6 +69,9 @@ public class AntiSpamFilterProblem extends AbstractDoubleProblem {
 		}
 	}
 
+	/**
+	 *Evaluates the fitness of a vector of weights.
+	 */
 	public void evaluate(DoubleSolution solution) {
 		int falsePositives = 0;
 		int falseNegatives = 0;

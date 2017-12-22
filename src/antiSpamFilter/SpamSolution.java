@@ -3,6 +3,9 @@ package antiSpamFilter;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.solution.Solution;
 
+/**
+ *Same class as DoubleSolution from JMetal, we only changed the copy() method.
+ */
 public class SpamSolution implements DoubleSolution{
 	private static final long serialVersionUID = 1L;
 	private final double lowerBound;
