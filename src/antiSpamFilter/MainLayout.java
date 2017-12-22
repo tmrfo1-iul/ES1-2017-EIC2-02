@@ -33,24 +33,25 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
 
 public class MainLayout {
-	private JFrame frame;
-	private JTextField txtRules;
-	private JTextField txtHam;
-	private JTextField txtSpam;
-	private JTextField txtManualFPositive;
-	private JTextField txtManualFNegative;
-	private JTextField txtOptimalFPositive;
-	private JTextField txtOptimalFNegative;
-	private JTable tableManualConfig;
-	private JTable tableOptimalConfig;
-	private JButton btnGravarManual;
-	private JButton btnGravarOptimal;
-	private JButton btnEvaluateManual;
-	private JButton btnGenerateOptimal;
-	private JDialog progressDialog;
-	private JScrollPane scrollPaneTabel1;
-	private JScrollPane scrollPaneTabel2;
-	private HashMap<String, Integer> rulesMap = new HashMap<String, Integer>();
+	public JFrame frame;
+	public JTextField txtRules;
+	public JTextField txtHam;
+	public JTextField txtSpam;
+	public JTextField txtManualFPositive;
+	public JTextField txtManualFNegative;
+	public JTextField txtOptimalFPositive;
+	public JTextField txtOptimalFNegative;
+	public JTable tableManualConfig;
+	public JTable tableOptimalConfig;
+	public JButton btnGravarManual;
+	public JButton btnGravarOptimal;
+	public JButton btnEvaluateManual;
+	public JButton btnGenerateOptimal;
+	public JDialog progressDialog;
+	public JScrollPane scrollPaneTabel1;
+	public JScrollPane scrollPaneTabel2;
+	public HashMap<String, Integer> rulesMap = new HashMap<String, Integer>();
+	public final static String RULES_FOLDER = "AntiSpamConfigurationForLeisureMailbox" + File.separator;
 
 	/**
 	 * Launch the application.
@@ -58,12 +59,8 @@ public class MainLayout {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
 					MainLayout window = new MainLayout();
 					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 			}
 		});
 	}
@@ -126,9 +123,6 @@ public class MainLayout {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("LOG Files", "log", "log");
 		fileChooserRules.setFileFilter(filterRules);
 		fileChooserOther.setFileFilter(filter);
-		File currDir = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "logFiles");
-		fileChooserRules.setCurrentDirectory(currDir);
-		fileChooserOther.setCurrentDirectory(currDir);
 		
 		btnRules.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -428,7 +422,8 @@ public class MainLayout {
 	 */
 	public void saveWeights(String weigh){
 		try {
-			PrintWriter writer = new PrintWriter(new FileOutputStream(new File(txtRules.getText()), false));
+			PrintWriter writer = new PrintWriter(new FileOutputStream(
+					new File(RULES_FOLDER + "rules.cf"), false));
     	if (weigh.equals("Automatico")){
 			DefaultTableModel modelAutomatico = (DefaultTableModel)tableOptimalConfig.getModel();
 			for(int i = 0; i <modelAutomatico.getRowCount(); i++){
