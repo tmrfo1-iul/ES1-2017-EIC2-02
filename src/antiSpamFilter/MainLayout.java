@@ -9,7 +9,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
@@ -423,8 +422,9 @@ public class MainLayout {
 	 */
 	public void saveWeights(String weigh){
 		try {
-			PrintWriter writer = new PrintWriter(new FileOutputStream(
-					new File(RULES_FOLDER + "rules.cf"), false));
+			File f = new File(RULES_FOLDER);
+			f.mkdirs();
+			PrintWriter writer = new PrintWriter(RULES_FOLDER+ "rules.cf");
     	if (weigh.equals("Automatico")){
 			DefaultTableModel modelAutomatico = (DefaultTableModel)tableOptimalConfig.getModel();
 			for(int i = 0; i <modelAutomatico.getRowCount(); i++){
@@ -577,7 +577,7 @@ public class MainLayout {
 		progressDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		Container content = new JFrame().getContentPane();
 	    
-	    ImageIcon bufferingIcon = new ImageIcon(this.getClass().getResource("/imageWindowBuilder/ajax-loader.gif"));
+	    ImageIcon bufferingIcon = new ImageIcon("/imageWindowBuilder/ajax-loader.gif");
 	    content.add(new JLabel("Calculating Optimal Solution...", bufferingIcon, JLabel.CENTER));
 	    Point parentLocation = frame.getLocation();
 	    progressDialog.add(content);
