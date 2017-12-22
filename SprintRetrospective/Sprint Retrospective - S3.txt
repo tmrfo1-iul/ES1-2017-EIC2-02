@@ -12,3 +12,7 @@ Working:
 Not Working:
 
   	-Tudo o que foi acordado no Sprint 3 foi concluido. A aplicacao esta finalizada.
+  	
+  	
+  	o video no youtube pode ser visto no seguinte canal
+  	https://www.youtube.com/channel/UClGTNoiD46rmv8BjEM7o4Sw?view_as=subscriber
