@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AntiSpamFilterAutomaticConfiguration {
-  private static final int INDEPENDENT_RUNS = 5 ;
+  public static final int INDEPENDENT_RUNS = 5 ;
 
   public static void run(String pathSpam, String pathHam, HashMap<String, Integer> rulesMap) throws IOException {
     String experimentBaseDirectory = "experimentBaseDirectory";

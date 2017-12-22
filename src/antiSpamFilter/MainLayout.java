@@ -1,6 +1,8 @@
 package antiSpamFilter;
 
+import java.awt.Container;
 import java.awt.EventQueue;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -17,6 +19,7 @@ import java.util.Scanner;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -44,6 +47,7 @@ public class MainLayout {
 	private JButton btnGravarOptimal;
 	private JButton btnEvaluateManual;
 	private JButton btnGenerateOptimal;
+	private JDialog progressDialog;
 	private HashMap<String, Integer> rulesMap = new HashMap<String, Integer>();
 
 	/**
@@ -79,7 +83,6 @@ public class MainLayout {
 		frame.setBounds(100, 100, 450, 667);
 
 		frame.addWindowListener(new WindowAdapter() {
-
 			@Override
 			public void windowClosing(WindowEvent e) {
 				int confirm = JOptionPane.showOptionDialog(null, "Do you wish to save the File Paths?",
@@ -211,14 +214,20 @@ public class MainLayout {
 		btnGenerateOptimal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					// TODO create a visual cue that the algorithm is running
-					AntiSpamFilterAutomaticConfiguration.run(txtSpam.getText(), txtHam.getText(), rulesMap);
-					readOptimalResults();
-				} catch (IOException e1) {
-					promptUser("An error occurred while trying to load the files from memory.\n"
-							+ "Please verify if the paths chosen are incorrect or missing.", true);
-				}
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							AntiSpamFilterAutomaticConfiguration.run(txtSpam.getText(), txtHam.getText(), rulesMap);
+							readOptimalResults();
+							progressDialog.dispose();
+						} catch (IOException e1) {
+							promptUser("An error occurred while trying to load the files from memory.\n"
+									+ "Please verify if the paths chosen are incorrect or missing.", true);
+						}
+					}
+				}).start();
+				createProgressPopUp();
 			}
 		});
 
@@ -513,7 +522,6 @@ public class MainLayout {
 	
 	private void saveWeights(String weigh){
 		try {
-			
 			PrintWriter writer = new PrintWriter(new FileOutputStream(new File("savedWeights" +weigh), false));
     	if (weigh.equals("Automatico")){
 			DefaultTableModel modelAutomatico = (DefaultTableModel)tableOptimalConfig.getModel();
@@ -529,9 +537,9 @@ public class MainLayout {
 			}
     	}
 			writer.close();
+			JOptionPane.showMessageDialog(frame, "Weights saved sucessfuly!", "Success!", JOptionPane.INFORMATION_MESSAGE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.out.println("ola");
 		}
 	}
 	
@@ -634,5 +642,19 @@ public class MainLayout {
 		String title = error ?  "Error!" : "Warning!";
 		int iconType = error ? JOptionPane.ERROR_MESSAGE : JOptionPane.WARNING_MESSAGE;
 		JOptionPane.showMessageDialog(frame, message, title, iconType);
+	}
+	
+	private void createProgressPopUp(){
+		progressDialog = new JDialog(frame, "Progress", true);
+		progressDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		Container content = new JFrame().getContentPane();
+	    
+	    ImageIcon bufferingIcon = new ImageIcon("ajax-loader.gif");
+	    content.add(new JLabel("Calculating Optimal Solution...", bufferingIcon, JLabel.CENTER));
+	    Point parentLocation = frame.getLocation();
+	    progressDialog.add(content);
+	    progressDialog.setLocation(parentLocation.x + frame.getWidth() / 4, parentLocation.y + frame.getHeight() / 2);
+	    progressDialog.setSize(300, 100);
+	    progressDialog.setVisible(true);
 	}
 }
