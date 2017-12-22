@@ -1,0 +1,14 @@
+Sprint Retrospective of Sprint 3
+
+
+Working:
+
+	-Os pesos gerados sao guardados num ficheiro.
+	-A introducao de pesos é validada quando se tenta inserir algo menor que -5 ou superior a 5
+	-Implementado a geracao de um filtro otimo automaticamente.
+	-Fix de varios bugs na interface grafica.
+	-Junit Test Cases com coverage superior a 75% e complexity superior a 75, em todo o codigo.
+
+Not Working:
+
+  	-Tudo o que foi acordado no Sprint 3 foi concluido. A aplicacao esta finalizada.

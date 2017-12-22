@@ -1,12 +1,9 @@
 package antiSpamFilterTests;
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.util.HashMap;
-
 import org.junit.Test;
-
 import antiSpamFilter.AntiSpamFilterAutomaticConfiguration;
 
 public class AntiSpamFilterAutomaticConfigurationTest {

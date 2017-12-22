@@ -125,36 +125,18 @@ public class MainLayout {
 		
 		btnRules.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooserRules.showOpenDialog(btnRules);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooserRules.getSelectedFile();
-					if(selectedFile.exists()){
-					txtRules.setText(selectedFile.getAbsolutePath());
-					}
-				}
+				fileChooserButton(txtRules, fileChooserRules);
 			}
 		});
 		btnHam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooserOther.showOpenDialog(btnHam);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooserOther.getSelectedFile();
-					if(selectedFile.exists()){
-						txtHam.setText(selectedFile.getAbsolutePath());
-						}
-				}
+				fileChooserButton(txtHam, fileChooserOther);
 			}
 		});
 
 		btnSpam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooserOther.showOpenDialog(btnSpam);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooserOther.getSelectedFile();
-					if(selectedFile.exists()){
-						txtSpam.setText(selectedFile.getAbsolutePath());
-						}
-				}
+				fileChooserButton(txtSpam, fileChooserOther);
 			}
 		});
 
@@ -192,20 +174,7 @@ public class MainLayout {
 		btnGenerateOptimal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							AntiSpamFilterAutomaticConfiguration.run(txtSpam.getText(), txtHam.getText(), rulesMap);
-							readOptimalResults();
-							progressDialog.dispose();
-						} catch (IOException e1) {
-							promptUser("An error occurred while trying to load the files from memory.\n"
-									+ "Please verify if the paths chosen are incorrect or missing.", true);
-							progressDialog.dispose();
-						}
-					}
-				}).start();
+				getJMetalWorkerThread().start();
 				createProgressPopUp();
 			}
 		});
@@ -647,5 +616,32 @@ public class MainLayout {
 		tableManualConfig.getColumnModel().getColumn(1).setResizable(false);
 		scrollPaneTabel1.setViewportView(tableManualConfig);
 		scrollPaneTabel2.setViewportView(tableOptimalConfig);
+	}
+	
+	public void fileChooserButton(JTextField txtField, JFileChooser fChooser) {
+		int result = fChooser.showOpenDialog(frame);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fChooser.getSelectedFile();
+			if(selectedFile.exists()){
+			txtField.setText(selectedFile.getAbsolutePath());
+			}
+		}
+	}
+	
+	public Thread getJMetalWorkerThread() {
+		return new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					AntiSpamFilterAutomaticConfiguration.run(txtSpam.getText(), txtHam.getText(), rulesMap);
+					readOptimalResults();
+					progressDialog.dispose();
+				} catch (IOException e1) {
+					promptUser("An error occurred while trying to load the files from memory.\n"
+							+ "Please verify if the paths chosen are incorrect or missing.", true);
+					progressDialog.dispose();
+				}
+			}
+		});
 	}
 }

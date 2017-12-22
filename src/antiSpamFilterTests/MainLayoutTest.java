@@ -1,28 +1,17 @@
 package antiSpamFilterTests;
 
 import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-
 import org.junit.Test;
-
 import antiSpamFilter.MainLayout;
 
 public class MainLayoutTest {
 
 	@Test
 	public void testMain() {
-		MainLayout k= new MainLayout();
-	}
-
-	@Test
-	public void testMainLayout() {
-		MainLayout k= new MainLayout();
+		MainLayout.main(null);
 	}
 
 	@Test
@@ -39,7 +28,6 @@ public class MainLayoutTest {
 
 	@Test
 	public void testSaveWeights() {
-
 		MainLayout k= new MainLayout();
 		k.saveWeights("");
 		DefaultTableModel modelAutomatico = (DefaultTableModel)k.tableOptimalConfig.getModel();
@@ -55,11 +43,10 @@ public class MainLayoutTest {
 	@Test
 	public void testSaveFilePaths() {
 		MainLayout k= new MainLayout();
-		String auxRules = k.txtRules.getText();
-		String auxHam = k.txtHam.getText();
-		String auxSpam = k.txtSpam.getText();
+		k.txtRules.setText(System.getProperty("curr.dir") + "/src/antiSpamFilterTests/rules.cf");
+		k.txtHam.setText(System.getProperty("curr.dir") + "/src/antiSpamFilterTests/ham.log");
+		k.txtSpam.setText(System.getProperty("curr.dir") + "/src/antiSpamFilterTests/spam.log");
 		k.saveFilePaths();
-
 	}
 
 	@Test
@@ -114,12 +101,10 @@ public class MainLayoutTest {
 		k.promptUser("hmm", true);
 	}
 
-	@Test
 	public void testCreateProgressPopUp() {
-		//MainLayout k= new MainLayout();
-		//k.createProgressPopUp();
-	//	k.progressDialog.dispose();
-		}
+		MainLayout k= new MainLayout();
+		k.createProgressPopUp();
+	}
 
 	@Test
 	public void testResetTableModels() {
@@ -133,4 +118,25 @@ public class MainLayoutTest {
 		assertEquals(modelAutomatico.isCellEditable(0, 0),false);
 	}
 	
+	@Test
+	public void testFileChooserButton(){
+		MainLayout k= new MainLayout();
+		JFileChooser fChooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("LOG Files", "log", "log");
+		fChooser.setFileFilter(filter);
+		k.fileChooserButton(k.txtHam, fChooser);
+	}
+	
+	
+	@Test
+	public void testGenerateOptimalFilter(){
+		MainLayout k = new MainLayout();
+		k.btnGenerateOptimal.doClick();
+	}
+	
+	@Test
+	public void testGetJMetalWorkerThread(){
+		MainLayout k = new MainLayout();
+		k.getJMetalWorkerThread().start();;
+	}
 }
